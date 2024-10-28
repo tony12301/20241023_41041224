@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打磚塊遊戲</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="game-container theme-default">
+            <!-- 主題切換按鈕 -->
+            <div class="theme-switcher">
+                <button class="theme-btn" data-theme="default">預設主題</button>
+                <button class="theme-btn" data-theme="night">夜空主題</button>
+                <button class="theme-btn" data-theme="forest">森林主題</button>
+                <button class="theme-btn" data-theme="ocean">海洋主題</button>
+            </div>
+
+            <!-- 音量控制 -->
+            <div class="volume-controls">
+                <div class="volume-control">
+                    <label for="musicVolume">背景音樂</label>
+                    <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.3">
+                </div>
+                <div class="volume-control">
+                    <label for="soundVolume">音效音量</label>
+                    <input type="range" id="soundVolume" min="0" max="1" step="0.1" value="0.5">
+                </div>
+            </div>
+
+            <!-- 難度選擇畫面 -->
+            <div id="difficultySelect" class="difficulty-select">
+                <h2>選擇遊戲難度</h2>
+                
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn" data-difficulty="easy">簡單</button>
+                    <button class="difficulty-btn" data-difficulty="medium">中等</button>
+                    <button class="difficulty-btn" data-difficulty="hard">困難</button>
+                </div>
+
+                <div class="difficulty-info">
+                    <h3>難度說明</h3>
+                    <ul>
+                        <li><strong>簡單：</strong>
+                            <ul>
+                                <li>球速較慢，擋板較寬，磚塊較少</li>
+                                <li>5條生命值</li>
+                            </ul>
+                        </li>
+                        <li><strong>中等：</strong>
+                            <ul>
+                                <li>球速適中，擋板適中，磚塊數量適中，出現需擊兩次的磚塊</li>
+                                <li>3條生命值</li>
+                            </ul>
+                        </li>
+                        <li><strong>困難：</strong>
+                            <ul>
+                                <li>球速較快，擋板較窄，磚塊較多，出現需擊三次的磚塊</li>
+                                <li>2條生命值</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 遊戲主畫面 -->
+            <div id="gameScreen" class="hidden">
+                <div class="game-info">
+                    <div class="score">分數：<span id="score">0</span></div>
+                    <div class="lives">生命值：<span id="lives">3</span></div>
+                    <div class="level">難度：<span id="difficulty">簡單</span></div>
+                </div>
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+                <div class="controls-info">
+                    <p class="control-hint">使用 ← → 方向鍵或滑鼠移動擋板</p>
+                </div>
+            </div>
+
+            <!-- 遊戲結束畫面 -->
+            <div id="gameOver" class="game-over hidden">
+                <h2>遊戲結束</h2>
+                <p class="final-score">最終得分：<span id="finalScore">0</span></p>
+                <div class="game-over-buttons">
+                    <button id="restartButton" class="button">重新開始</button>
+                    <button id="changeDifficultyButton" class="button">更改難度</button>
+                </div>
+            </div>
+
+            <!-- 音訊元素 -->
+            <audio id="backgroundMusic" loop>
+                <source src="audio/background.wav" type="audio/wav">
+            </audio>
+            <audio id="hitSound">
+                <source src="audio/hit.wav" type="audio/wav">
+            </audio>
+            <audio id="loseLifeSound">
+                <source src="audio/loseLife.wav" type="audio/wav">
+            </audio>
+        </div>
+    </div>
+    <!-- 載入遊戲腳本 -->
+    <script src="game.js"></script>
+</body>
+</html>
